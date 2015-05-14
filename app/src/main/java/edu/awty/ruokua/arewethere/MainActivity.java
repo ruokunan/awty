@@ -11,7 +11,9 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private boolean messageStart = false;
-
+    private EditText message = (EditText) findViewById(R.id.message);
+    private EditText phoneNumber = (EditText)findViewById(R.id.phone_number);
+    private EditText interval = (EditText)findViewById(R.id.interval);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +28,19 @@ public class MainActivity extends AppCompatActivity {
                 } else if(isFilledOut()) {
                     start.setText("Stop");
                     messageStart = true;
+
                 }
             }
         });
 
     }
 
+    /**
+     * 
+     */
+    private void sendMessage() {
+
+    }
 
     /**
      *
@@ -39,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
      * legitimate values
      */
     private boolean isFilledOut() {
-        EditText message = (EditText) findViewById(R.id.message);
-        EditText phoneNumber = (EditText)findViewById(R.id.phone_number);
-        EditText interval = (EditText)findViewById(R.id.interval);
         return  message.getText().toString().trim().length() != 0 &&
                 phoneNumber.getText().toString().trim().length() != 0 &&
                 interval.getText().toString().toString().length() !=0 &&
