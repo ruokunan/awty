@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/ruokua/awty/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/Users/ruokua/awty/app/build/intermediates/pre-dexed/debug/classes-38b396db7578b67e79cecb96dd9b2d6821b449ad.jar" />
+    </item>
+    <item
+        jar="/Users/ruokua/awty/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/Users/ruokua/awty/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-28541c99a6e3f239a4f7b4b75c4fd5d58f40c634.jar" />
+    </item>
+    <item
+        jar="/Users/ruokua/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/ruokua/awty/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-37f1528414137a371bd015426ab8ab90f65f0fac.jar" />
+    </item>
+    <item
+        jar="/Users/ruokua/awty/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/Users/ruokua/awty/app/build/intermediates/pre-dexed/debug/classes-31122d9f6895544d6590f2a753f67959f656d0d2.jar" />
+    </item>
+
+</items>

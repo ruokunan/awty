@@ -1,34 +1,62 @@
 package edu.awty.ruokua.arewethere;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
     private boolean messageStart = false;
-    private EditText message = (EditText) findViewById(R.id.message);
-    private EditText phoneNumber = (EditText)findViewById(R.id.phone_number);
-    private EditText interval = (EditText)findViewById(R.id.interval);
+    private EditText message;
+    private EditText phoneNumber;
+    private EditText interval;
+    private AlarmManager manager;
+    private PendingIntent pendingIntent;
+    private static final String START_TEXT = "Start";
+    private static final String STOP_TEXT = "Stop";
+    private static int requestCode = 0;
+    private static final String MESSAGE = "message";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Button start = (Button)findViewById(R.id.btn_start);
+
+        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        phoneNumber = (EditText) findViewById(R.id.phone_number);
+        interval = (EditText) findViewById(R.id.interval);
+        message = (EditText) findViewById(R.id.message);
+
+
+        assert (phoneNumber != null);
+        assert (interval != null);
+        assert (message != null);
+
+        final Button start = (Button) findViewById(R.id.btn_start);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(messageStart) {
-                    start.setText("Start");
+                if (messageStart) {
+                    start.setText(START_TEXT);
                     messageStart = false;
-                } else if(isFilledOut()) {
-                    start.setText("Stop");
+                    messageStop();
+                } else if (isFilledOut()) {
+                    start.setText(STOP_TEXT);
                     messageStart = true;
-
+                    messageStart();
                 }
             }
         });
@@ -36,23 +64,67 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 
+     *
      */
     private void sendMessage() {
 
     }
 
     /**
-     *
      * @return true if user filled out all the need information with
      * legitimate values
      */
     private boolean isFilledOut() {
-        return  message.getText().toString().trim().length() != 0 &&
-                phoneNumber.getText().toString().trim().length() != 0 &&
-                interval.getText().toString().toString().length() !=0 &&
-                Integer.parseInt(interval.getText().toString()) > 0;
+        return (message.getText().toString().trim().length() != 0) &&
+                (phoneNumber.getText().toString().trim().length() != 0) &&
+                (interval.getText().toString().trim().length() != 0) &&
+                (Integer.parseInt(interval.getText().toString()) > 0) &&
+                PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber.
+                        getText().toString());
     }
+
+
+    public void messageStart() {
+
+        long repeatInterval = TimeUnit.MINUTES.
+                toMillis(Integer.parseInt(interval.getText().toString()));
+
+
+        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        alarmIntent.putExtra(MESSAGE, phoneNumber.getText().toString().concat(" ").
+                concat(message.getText().toString()));
+
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+                repeatInterval, pendingIntent);
+        Toast.makeText(this, "Alarm Start", Toast.LENGTH_LONG).show();
+
+    }
+
+    // Stop the alarm.
+    public void messageStop() {
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        assert (pendingIntent != null);
+        manager.cancel(pendingIntent);
+        Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_LONG).show();
+    }
+
+
+    private class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra(MESSAGE);
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,4 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
