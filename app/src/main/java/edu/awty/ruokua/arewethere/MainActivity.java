@@ -2,7 +2,6 @@ package edu.awty.ruokua.arewethere;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 concat(message.getText().toString()));
 
         pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+              0);
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                 repeatInterval, pendingIntent);
@@ -112,15 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class AlarmReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra(MESSAGE);
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-        }
 
-
-    }
 
 
 
