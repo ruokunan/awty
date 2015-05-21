@@ -1,8 +1,10 @@
 package edu.awty.ruokua.arewethere;
 
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
 import android.widget.Toast;
 
 /**
@@ -19,10 +21,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         
         String phone = intent.getStringExtra(PHONE_NUMBER);
         SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage(phone, null, msg, null, null);
+        smsManager.sendTextMessage(phone, null, message, null, null);
 
-       
-       
+
+
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
