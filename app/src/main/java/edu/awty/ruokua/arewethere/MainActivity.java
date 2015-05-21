@@ -62,12 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     *
-     */
-    private void sendMessage() {
 
-    }
 
     /**
      * @return true if user filled out all the need information with
@@ -90,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        alarmIntent.putExtra(AlarmReceiver.MESSAGE, message.getText().toString()));
+        alarmIntent.putExtra(AlarmReceiver.MESSAGE, message.getText().toString());
         alarmIntent.putExtra(AlarmReceiver.PHONE_NUMBER, phoneNumber.getText().toString());
 
         pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent,
