@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        alarmIntent.putExtra(MESSAGE, phoneNumber.getText().toString().concat(" ").
-                concat(message.getText().toString()));
+        alarmIntent.putExtra(AlarmReceiver.MESSAGE, message.getText().toString()));
+        alarmIntent.putExtra(AlarmReceiver.PHONE_NUMBER, phoneNumber.getText().toString());
 
         pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent,
               0);
