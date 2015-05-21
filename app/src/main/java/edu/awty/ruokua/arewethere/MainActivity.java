@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String START_TEXT = "Start";
     private static final String STOP_TEXT = "Stop";
     private static int requestCode = 0;
-    private static final String MESSAGE = "message";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         alarmIntent.putExtra(AlarmReceiver.MESSAGE, message.getText().toString());
         alarmIntent.putExtra(AlarmReceiver.PHONE_NUMBER, phoneNumber.getText().toString());
 
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent,
+        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, requestCode, alarmIntent,
               0);
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
@@ -105,7 +105,14 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_LONG).show();
     }
 
-
+   @Override
+   protected void onDestroy(){
+       super.onDestroy();
+       AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+       assert (pendingIntent != null);
+       manager.cancel(pendingIntent);
+       Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_LONG).show();
+   }
 
 
 
